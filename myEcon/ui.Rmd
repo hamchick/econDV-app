@@ -14,7 +14,7 @@ library(dplyr)
 library(shiny)
 library(htmltools)
 library(econR)
-
+library(DT)
 ```
 
 ```{r dependencies}
@@ -64,6 +64,12 @@ selectInput("varible2", "Choose a varible2 (y axis):",
 output_plotly <- plotlyOutput("distPlot")
 ```
 
+```{r output_table}
+output_table <- DT::dataTableOutput("mytable")
+
+```
+
+
 ## =======================
 
 ### UI
@@ -86,7 +92,10 @@ ui <- tags$body(
 
         # Show a plot of the generated distribution
         mainPanel(
-           output_plotly
+           output_plotly,
+        ),
+        mainPanel(
+           output_table
         )
 
 ))

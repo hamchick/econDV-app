@@ -55,13 +55,9 @@ server <- function(input, output) {
     }
     plotly::ggplotly(plotOutcome)
   })
-  output$mytable <- (output$mytable <- DT::renderDataTable)({
+  output$mytable <- renderDT({
     sample
   })
-  
-  output$mytable = renderDT(
-    sample, options = list(lengthChange = FALSE)
-  )
 }
 
 shinyApp(

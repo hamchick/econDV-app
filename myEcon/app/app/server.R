@@ -43,7 +43,7 @@ output$distPlot <- plotly::renderPlotly({
     }
     plotly::ggplotly(plotOutcome)
 })
-output$mytable <- (output$mytable <- DT::renderDataTable)({
+output$mytable <- renderDT({
     sample
 })
 }

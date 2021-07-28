@@ -13,19 +13,20 @@ even I paste the whole R file it still runs error
 cant mix it 
 
 
-############################# sloved
+#############################
 
-in myEcon
+change Dataset (fail in Download file)
 
-cant transform my ggplot to plotly
-it will show error when I click bulid App
+use dataTable (fail in econR package)
+
+
+really wierd problem
+
+I delete the plot part in ui
+but it still shows in app.R
+creepy
 
 #############################
 
 next to do :
 
-Do different plots for different datas
-
-	cant do if else in plot
-	
-	maybe try to do it in shiny?

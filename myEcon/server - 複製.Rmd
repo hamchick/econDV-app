@@ -1,0 +1,134 @@
+---
+drake_cache: '.server123'
+---
+
+```{r makecondition}
+library(shiny)
+library(ggplot2)
+library(plotly)
+
+sample <- read.csv("./SampleData.csv")
+sample$TARGET = as.character(sample$TARGET)
+```
+
+```{r}
+library(dplyr)
+appSystem <- get_currentRmd()
+appSystem <- check_yaml(appSystem)
+appSystem %>%
+  check_Rproject()
+```
+
+## Input 
+
+```{r makecondition_input}
+input_bins = 30
+
+input = "AMT_ANNUITY"
+input2 = "CONTRACT_TYPE"
+
+select1<-select(sample,input)
+select2<-select(sample,input2)
+
+```
+
+## Output rendering
+
+  * must have `render_outputId` and `output_outputId` objects.
+  
+  * `render_outputId` has render function as its value, which will be used to generate proper server.R
+
+```{r render_distPlot}
+render_distPlot <- renderPlotly
+```
+
+
+```{r output_distPlot}
+
+#output_distPlot <-  {ggplot(data=sample)}
+  
+  #input = "AMT_ANNUITY"
+  #input2 = "CONTRACT_TYPE"
+  select1<-select(sample,input)
+  select2<-select(sample,input2)
+
+
+if (is.character(select1[1,1])) {
+      if (is.character(select2[1,1])){
+        output_distPlot <- ggplot(data = sample) + geom_count(
+          aes(x=get(input$varible1), y = get(input$varible2))
+        )
+      } else {
+        output_distPlot <- ggplot(data = sample) + geom_col(
+          aes(x=get(input$varible1), y = get(input$varible2))
+        )
+      }
+    } else {
+      if (is.character(select2[1,1])){
+        output_distPlot <- ggplot(data = sample) + geom_col(
+          aes(x=get(input$varible1), y = get(input$varible2))
+        )
+      }else{
+        output_distPlot <- ggplot(data = sample) + geom_smooth(
+          aes(x=get(input$varible1), y = get(input$varible2))
+        )
+      }
+    }
+
+  output_distPlot <-ggplotly(output_distPlot)
+```
+
+
+```{r output_distPlot, drake=F}
+
+varible1 = sample$AMT_ANNUITY
+varible2 = sample$CONTRACT_TYPE
+
+ p <-  {
+    ggplot(data=sample)
+ }
+
+  if (is.character(varible1)) {
+    if (is.character(varible2)){
+       p <- p + geom_count(
+         aes(x=varible1, y = varible2)
+       )
+    }
+    else {
+       p <- p + geom_col(
+         aes(x=varible1, y = varible2)
+       )
+    }
+ 
+} else {
+    if (is.character(varible2)){
+       p <- p + geom_col(
+         aes(x=varible1, y = varible2)
+       )
+    }
+    else {
+       p <- p + geom_smooth(
+         aes(x=varible1, y = varible2)
+       )
+    }
+}
+
+output_distPlot <- p
+output_distPlot
+
+```
+
+```{r output_distPlot, drake=F}
+output_distPlot <-  {
+    ggplot(data = sample) +
+      geom_count(
+        aes(x=get(input$varible1), y = get(input$varible2)) #, bins=as.numeric(input_bins)
+      )+  scale_size_area(max_size = 15)
+}
+
+# ggplotly(distPlot) -> output_distPlot
+  
+  #output_distPlot
+
+```
+

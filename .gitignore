@@ -1,12 +1,13 @@
-
+copy
 *.map
 *.css
 *.js
 *.svg
 *.pper
-*.Rproj.user/8B88F776/sources/prop/DA80A66C
 *.rds
 *.ttf
 *.woff2
 *.json
 *.csv
+
+**/.*/**
